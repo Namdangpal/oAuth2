@@ -45,16 +45,16 @@
 					<span class="login100-form-title-1">
 					</span>
 				</div>
-				<form class="login100-form validate-form">
+				<form class="login100-form validate-form" action="/loginCheck">
 					<div class="wrap-input100 validate-input m-b-26" data-validate="아이디를 입력하세요">
 						<span class="label-input100">아이디</span>
-						<input class="input100" type="text" name="username" placeholder="아이디">
+						<input class="input100" type="text" name="staffId" placeholder="아이디">
 						<span class="focus-input100"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input m-b-18" data-validate = "비밀번호">
 						<span class="label-input100">비밀번호</span>
-						<input class="input100" type="password" name="pass" placeholder="비밀번호를 입력하세요">
+						<input class="input100" type="password" name="staffPwd placeholder="비밀번호를 입력하세요">
 						<span class="focus-input100"></span>
 					</div>
 

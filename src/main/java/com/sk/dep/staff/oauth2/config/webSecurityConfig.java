@@ -1,5 +1,7 @@
 package com.sk.dep.staff.oauth2.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 /*
  * ------------------------------------------------------------------------------
@@ -37,6 +41,8 @@ public class webSecurityConfig extends WebSecurityConfigurerAdapter {
 	    private AccessDeniedHandler accessDeniedHandler;
 	 @Autowired 
 	 UserDetailsService userDetailsService; 
+	 @Autowired 
+	 DataSource dataSource;
 	  
 
 	    // roles admin allow to access /admin/**
@@ -53,27 +59,39 @@ public class webSecurityConfig extends WebSecurityConfigurerAdapter {
 						.antMatchers("/member/**").hasAnyRole("ADMIN")
 						.antMatchers("/user/**").hasAnyRole("USER")
 						.anyRequest().authenticated()
-	                .and()
+						.and()
 	                .formLogin()
-						.loginPage("/login")
-						.permitAll()
-						.and() 
+	                	.loginProcessingUrl("/loginCheck") // Submit URL
+	                	.loginPage("/login")//
+	                	.defaultSuccessUrl("/userAccount")//
+	                	.failureUrl("/login?error=true")//
+	                	.usernameParameter("staffId")//
+	                	.passwordParameter("staffPwd")
+	                	// Config for Logout Page
+	                	.and()
 	                .logout()
-						.permitAll() 
-					 	.and()
+	                	.logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful") 
+						.and()  
 	                .exceptionHandling().accessDeniedHandler(accessDeniedHandler); 
+	        http.authorizeRequests().and() //
+            .rememberMe().tokenRepository(this.persistentTokenRepository()) //
+            .tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
 	    }
 
 	    // create two users, admin and user
 	    @Autowired
 	    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 	    	 auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-	    }  
- 
+	    }   
 	    @Bean
 	    public BCryptPasswordEncoder passwordEncoder() {
 	        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 	        return bCryptPasswordEncoder;
 	    }
-	    
+	    @Bean
+	    public PersistentTokenRepository persistentTokenRepository() {
+	        JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();	        
+			db.setDataSource(dataSource);
+	        return db;
+	    }
 }

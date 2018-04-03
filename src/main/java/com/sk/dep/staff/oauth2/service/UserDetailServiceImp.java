@@ -37,8 +37,8 @@ public class UserDetailServiceImp implements UserDetailsService {
     memberService userRepository;
  
     @Override
-    public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
-        member user = userRepository.memberOne(memberId);
+    public UserDetails loadUserByUsername(String staffId) throws UsernameNotFoundException {
+        member user = userRepository.memberOne(staffId);
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN")); 
         return new org.springframework.security.core.userdetails.User(user.getStaffId(), 
