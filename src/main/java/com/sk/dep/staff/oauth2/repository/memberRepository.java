@@ -26,5 +26,5 @@ import com.sk.dep.staff.oauth2.entity.member;
  */
 @Repository
 public interface memberRepository extends JpaRepository<member, String>{
-	public List<member> findByStaffId(String memberId); 
+	public List<member> findByStaffId(String staffId); 
 }

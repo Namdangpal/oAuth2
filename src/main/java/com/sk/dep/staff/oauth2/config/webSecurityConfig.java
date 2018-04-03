@@ -42,8 +42,7 @@ public class webSecurityConfig extends WebSecurityConfigurerAdapter {
 	 @Autowired 
 	 UserDetailsService userDetailsService; 
 	 @Autowired 
-	 DataSource dataSource;
-	  
+	 DataSource dataSource;	  
 
 	    // roles admin allow to access /admin/**
 	    // roles user allow to access /user/**

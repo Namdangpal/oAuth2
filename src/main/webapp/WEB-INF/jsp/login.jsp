@@ -45,7 +45,7 @@
 					<span class="login100-form-title-1">
 					</span>
 				</div>
-				<form class="login100-form validate-form" action="/loginCheck">
+				<form class="login100-form validate-form" action="/loginCheck" method="post">
 					<div class="wrap-input100 validate-input m-b-26" data-validate="아이디를 입력하세요">
 						<span class="label-input100">아이디</span>
 						<input class="input100" type="text" name="staffId" placeholder="아이디">
