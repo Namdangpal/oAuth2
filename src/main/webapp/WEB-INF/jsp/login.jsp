@@ -46,15 +46,15 @@
 					</span>
 				</div>
 				<form class="login100-form validate-form">
-					<div class="wrap-input100 validate-input m-b-26" data-validate="User LoginId is required">
-						<span class="label-input100">Login Id</span>
-						<input class="input100" type="text" name="username" placeholder="Enter User LoginId">
+					<div class="wrap-input100 validate-input m-b-26" data-validate="아이디를 입력하세요">
+						<span class="label-input100">아이디</span>
+						<input class="input100" type="text" name="username" placeholder="아이디">
 						<span class="focus-input100"></span>
 					</div>
 
-					<div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
-						<span class="label-input100">Password</span>
-						<input class="input100" type="password" name="pass" placeholder="Enter password">
+					<div class="wrap-input100 validate-input m-b-18" data-validate = "비밀번호">
+						<span class="label-input100">비밀번호</span>
+						<input class="input100" type="password" name="pass" placeholder="비밀번호를 입력하세요">
 						<span class="focus-input100"></span>
 					</div>
 
@@ -62,13 +62,13 @@
 						<div class="contact100-form-checkbox">
 							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
 							<label class="label-checkbox100" for="ckb1">
-								Remember me
+								자동로그인
 							</label>
 						</div>
 
 						<div>
 							<a href="#" class="txt1">
-								Forgot Password?
+								비밀번호를 모르나요?
 							</a>
 						</div>
 					</div>

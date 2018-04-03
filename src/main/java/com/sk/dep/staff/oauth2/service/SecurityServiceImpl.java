@@ -50,9 +50,7 @@ public class SecurityServiceImpl implements SecurityService {
         UserDetails userDetails = userDetailsService.loadUserByUsername(staffId);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken 
          = new UsernamePasswordAuthenticationToken(userDetails,staffPwd, userDetails.getAuthorities()); 
- 
         authenticationManager.authenticate(usernamePasswordAuthenticationToken);
- 
         if (usernamePasswordAuthenticationToken.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             log.debug(String.format("Auto login %s successfully!", staffPwd));
