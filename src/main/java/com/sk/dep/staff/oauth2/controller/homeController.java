@@ -42,11 +42,16 @@ public class homeController {
 	@RequestMapping(value="/login") 
 	public String loginView(Model model) throws Exception{ 
 		return "login";
-	}
+	} 
 	
 	@RequestMapping(value="/loginCheck", method=RequestMethod.POST) 
 	public String loginCheckView(@PathVariable String staffId,@PathVariable String staffPwd,Model model) throws Exception{ 
 		return "loginCheck";
+	}
+	
+	@RequestMapping(value="/userAccount") 
+	public String loginCheckView(Model model) throws Exception{ 
+		return "userAccount";
 	}
 	
 }
