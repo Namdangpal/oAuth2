@@ -53,28 +53,29 @@ public class webSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	        http.csrf().disable()
 	                .authorizeRequests()
-						.antMatchers("/", "/login", "/about").permitAll()
-						.antMatchers("/admin/**").hasAnyRole("ADMIN")
-						.antMatchers("/member/**").hasAnyRole("ADMIN")
-						.antMatchers("/user/**").hasAnyRole("USER")
+						.antMatchers("/", "/login", "/logout").permitAll()
+						.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+						.antMatchers("/member/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+						.antMatchers("/user/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
 						.anyRequest().authenticated()
 						.and()
 	                .formLogin()
 	                	.loginProcessingUrl("/loginCheck") // Submit URL
 	                	.loginPage("/login")//
-	                	.defaultSuccessUrl("/userAccount")//
-	                	.failureUrl("/login?error=true")//
-	                	.usernameParameter("staffId")//
-	                	.passwordParameter("staffPwd")
+	                	//.failureUrl("/login?error=true")//
+	                	 .usernameParameter("staffId")//
+	                	 .passwordParameter("staffPwd")
+	                	 .defaultSuccessUrl("/member/userAccount")//
 	                	// Config for Logout Page
 	                	.and()
 	                .logout()
 	                	.logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful") 
 						.and()  
 	                .exceptionHandling().accessDeniedHandler(accessDeniedHandler); 
-	        http.authorizeRequests().and() //
-            .rememberMe().tokenRepository(this.persistentTokenRepository()) //
-            .tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
+	        http.authorizeRequests()
+	        		.and() //
+            		.rememberMe().tokenRepository(this.persistentTokenRepository()) //
+            		.tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
 	    }
 
 	    // create two users, admin and user

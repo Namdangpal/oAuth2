@@ -1,16 +1,22 @@
 package com.sk.dep.staff.oauth2.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.sk.dep.staff.oauth2.utils.WebUtils;
+ 
 
 /*
  * ------------------------------------------------------------------------------
@@ -49,9 +55,45 @@ public class homeController {
 		return "loginCheck";
 	}
 	
-	@RequestMapping(value="/userAccount") 
+	@RequestMapping(value="/member/userAccount") 
 	public String loginCheckView(Model model) throws Exception{ 
 		return "userAccount";
 	}
 	
+	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
+    public String userInfo(Model model, Principal principal) {
+ 
+        // After user login successfully.
+        String userName = principal.getName();
+ 
+        System.out.println("User Name: " + userName);
+ 
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+ 
+        String userInfo = WebUtils.toString(loginedUser);
+        model.addAttribute("userInfo", userInfo);
+ 
+        return "userInfoPage";
+    }
+ 
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public String accessDenied(Model model, Principal principal) {
+ 
+        if (principal != null) {
+            User loginedUser = (User) ((Authentication) principal).getPrincipal();
+ 
+            String userInfo = WebUtils.toString(loginedUser);
+ 
+            model.addAttribute("userInfo", userInfo);
+ 
+            String message = "Hi " + principal.getName() //
+                    + "<br> You do not have permission to access this page!";
+            model.addAttribute("message", message);
+ 
+        }
+ 
+        return "403Page";
+    }
+ 
+ 
 }
