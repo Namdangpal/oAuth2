@@ -62,10 +62,10 @@ public class webSecurityConfig extends WebSecurityConfigurerAdapter {
 	                .formLogin()
 	                	.loginProcessingUrl("/loginCheck") // Submit URL
 	                	.loginPage("/login")//
-	                	//.failureUrl("/login?error=true")//
-	                	 .usernameParameter("staffId")//
-	                	 .passwordParameter("staffPwd")
-	                	 .defaultSuccessUrl("/member/userAccount")//
+	                	.failureUrl("/login?error=true")//
+	                	.usernameParameter("staffId")//
+	                	.passwordParameter("staffPwd")
+	                	.defaultSuccessUrl("/member/userAccount")//
 	                	// Config for Logout Page
 	                	.and()
 	                .logout()

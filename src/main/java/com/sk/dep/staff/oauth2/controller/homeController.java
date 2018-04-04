@@ -64,32 +64,26 @@ public class homeController {
     public String userInfo(Model model, Principal principal) {
  
         // After user login successfully.
-        String userName = principal.getName();
- 
-        System.out.println("User Name: " + userName);
- 
-        User loginedUser = (User) ((Authentication) principal).getPrincipal();
- 
+        String userName = principal.getName(); 
+        System.out.println("User Name: " + userName); 
+        User loginedUser = (User) ((Authentication) principal).getPrincipal(); 
         String userInfo = WebUtils.toString(loginedUser);
+        
+        System.out.println("userInfo : " + userInfo ); 
         model.addAttribute("userInfo", userInfo);
  
         return "userInfoPage";
     }
  
     @RequestMapping(value = "/403", method = RequestMethod.GET)
-    public String accessDenied(Model model, Principal principal) {
- 
+    public String accessDenied(Model model, Principal principal) { 
         if (principal != null) {
-            User loginedUser = (User) ((Authentication) principal).getPrincipal();
- 
-            String userInfo = WebUtils.toString(loginedUser);
- 
-            model.addAttribute("userInfo", userInfo);
- 
+            User loginedUser = (User) ((Authentication) principal).getPrincipal(); 
+            String userInfo = WebUtils.toString(loginedUser); 
+            model.addAttribute("userInfo", userInfo); 
             String message = "Hi " + principal.getName() //
                     + "<br> You do not have permission to access this page!";
             model.addAttribute("message", message);
- 
         }
  
         return "403Page";
