@@ -5,3 +5,6 @@ http://cpdev.tistory.com/84
 
 https://github.com/rohitghatol/spring-boot-microservices
 http://sivatechlab.com/secure-rest-api-using-spring-security-oauth2/
+
+
+Open Declaration org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory.KeyStoreKeyFactory(Resource resource, char[] password)
