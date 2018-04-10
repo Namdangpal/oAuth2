@@ -47,6 +47,9 @@ public class homeController {
 	
 	@RequestMapping(value="/login") 
 	public String loginView(Model model) throws Exception{ 
+		String SALT = "TEST";
+		byte[] key = SALT.getBytes("UTF-8");
+		logger.info("/login : "  + key.toString() + " : " + new String(SALT.getBytes("UTF-8"), "utf-8")) ;
 		return "login";
 	} 
 	
