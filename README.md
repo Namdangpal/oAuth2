@@ -13,3 +13,6 @@ Open Declaration org.springframework.security.oauth2.provider.token.store.KeySto
 https://github.com/sbcoba/spring-boot-oauth2-sample/tree/example9
 
 https://github.com/spring-projects/spring-security-oauth
+
+http://www.devglan.com/spring-security/spring-boot-security-oauth2-example
+http://www.devglan.com/spring-security/spring-boot-oauth2-jwt-example
