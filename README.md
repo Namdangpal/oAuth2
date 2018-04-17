@@ -25,3 +25,5 @@ https://github.com/SeungHwan-Lee/SpringBoot-front-Template
 https://github.com/SeungHwan-Lee/SpringBoot-OAuth2-Template 
 
 https://konghq.com/
+
+https://github.com/visusnet/broken-oauth2-example
