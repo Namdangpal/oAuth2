@@ -16,3 +16,10 @@ https://github.com/spring-projects/spring-security-oauth
 
 http://www.devglan.com/spring-security/spring-boot-security-oauth2-example
 http://www.devglan.com/spring-security/spring-boot-oauth2-jwt-example
+
+
+https://github.com/SeungHwan-Lee/SpringBoot-restAPI-Template
+
+https://github.com/SeungHwan-Lee/SpringBoot-front-Template
+
+https://github.com/SeungHwan-Lee/SpringBoot-OAuth2-Template 
