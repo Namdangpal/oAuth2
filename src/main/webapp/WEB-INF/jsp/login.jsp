@@ -36,7 +36,6 @@
 	<link rel="stylesheet" type="text/css" href="https://colorlib.com/etc/lf/Login_v15/css/util.css">
 	<link rel="stylesheet" type="text/css" href="https://colorlib.com/etc/lf/Login_v15/css/main.css">
 <!--===============================================================================================-->
-
   </head>
   <body>
  	<div class="limiter">
@@ -52,13 +51,11 @@
 						<input class="input100" type="text" name="staffId" id="staffId" placeholder="아이디">
 						<span class="focus-input100"></span>
 					</div>
-
 					<div class="wrap-input100 validate-input m-b-18" data-validate = "비밀번호">
 						<span class="label-input100">비밀번호</span>
 						<input class="input100" type="password" name="staffPwd"  id="staffPwd" placeholder="비밀번호를 입력하세요">
 						<span class="focus-input100"></span>
 					</div>
-
 					<div class="flex-sb-m w-full p-b-30">
 						<div class="contact100-form-checkbox">
 							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
@@ -66,14 +63,12 @@
 								자동로그인
 							</label>
 						</div>
-
 						<div>
 							<a href="#" class="txt1">
 								비밀번호를 모르나요?
 							</a>
 						</div>
 					</div>
-
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn" >
 							Login
@@ -89,7 +84,6 @@
 			</div>
 		</div>
 	</div>
-
 <!--===============================================================================================-->
 	<script src="https://colorlib.com/etc/lf/Login_v15/vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
@@ -115,6 +109,7 @@
 	  gtag('config', 'UA-23581568-13');
 	</script>
 	<script type="text/javascript">
+	const CLIENT_ID = "bXlfY2xpZW50X2lkOm15X2NsaWVudF9zZWNyZXQ=";
 		function funAjax1(){
 			 $.ajax({ 
 		            url : 'http://localhost:8080/users/user', 
@@ -137,12 +132,13 @@
 		                  } 
 		        });
 		}
+		
 		function funAjax2(){
 			 $.ajax({
 		            type : 'POST',
 		            url : 'http://localhost:8080/oauth/token',
 		            headers: {
-		                'Authorization':'Basic bXlfY2xpZW50X2lkOm15X2NsaWVudF9zZWNyZXQ=', 
+		                'Authorization':'Basic ' + CLIENT_ID, 
 		                'Content-Type':'application/x-www-form-urlencoded' ,
 		                'Access-Control-Allow-Origin':'*'
 		            }, 
@@ -154,7 +150,7 @@
 		            },
 		            success : function(response) {
 		            		alert(response.access_token);
-		                 var expiredAt = new Date();
+		                 	var expiredAt = new Date();
 		                    expiredAt.setSeconds(expiredAt.getSeconds() + response.expires_in);
 		                    response.expires_at = expiredAt.getTime();
 		                    localStorage.setItem('ls.token', JSON.stringify(response));
@@ -240,8 +236,6 @@
 				    return output;
 				}
 			}
-
 	</script>
-
   </body>
 </html>
