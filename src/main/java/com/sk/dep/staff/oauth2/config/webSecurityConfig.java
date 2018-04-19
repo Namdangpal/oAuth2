@@ -57,7 +57,7 @@ public class webSecurityConfig extends WebSecurityConfigurerAdapter {
 						.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
 						.antMatchers("/member/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
 						.antMatchers("/user/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-						.anyRequest().authenticated()
+						.anyRequest().authenticated()						
 						.and()
 	                .formLogin()
 	                	.loginProcessingUrl("/loginCheck") // Submit URL
@@ -68,6 +68,7 @@ public class webSecurityConfig extends WebSecurityConfigurerAdapter {
 	                	.defaultSuccessUrl("/member/userAccount")//
 	                	// Config for Logout Page
 	                	.and()
+	                	
 	                .logout()
 	                	.logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful") 
 						.and()  

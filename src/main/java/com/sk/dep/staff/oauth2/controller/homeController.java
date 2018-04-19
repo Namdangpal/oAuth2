@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -55,11 +57,15 @@ public class homeController {
 	
 	@RequestMapping(value="/loginCheck", method=RequestMethod.POST) 
 	public String loginCheckView(@PathVariable String staffId,@PathVariable String staffPwd,Model model) throws Exception{ 
+		System.out.println("User Name: " + staffId + " :" + staffPwd); 
 		return "loginCheck";
 	}
 	
 	@RequestMapping(value="/member/userAccount") 
-	public String loginCheckView(Model model) throws Exception{ 
+	public String loginCheckView(Model model,Principal principal) throws Exception{ 
+		String userName = principal.getName(); 
+		String userPwd =  Context.SECURITY_AUTHENTICATION;
+        System.out.println("User Name: " + userName + " :" + userPwd); 
 		return "userAccount";
 	}
 	
