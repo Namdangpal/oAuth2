@@ -74,10 +74,14 @@
 							Login
 						</button>
 						<label class="login100-form-btn" onclick="funAjax1()">
-							Test1
+							데이타가져오기
 						</label>
 						<label class="login100-form-btn" onclick="funAjax2()">
-							Test2
+							접근권한토큰발행
+						</label>
+						
+						<label class="login100-form-btn" onclick="funAjax3()">
+							접근권한토큰재발행
 						</label>
 					</div>
 				</form>
@@ -149,7 +153,37 @@
 		                'grant_type' : 'password'
 		            },
 		            success : function(response) {
-		            		alert(response.access_token);
+		            		
+		                 	var expiredAt = new Date();
+		                    expiredAt.setSeconds(expiredAt.getSeconds() + response.expires_in);
+		                    response.expires_at = expiredAt.getTime();
+		                    localStorage.setItem('ls.token', JSON.stringify(response));
+		                    alert("Authorization Bearer " + JSON.parse(localStorage.getItem("ls.token")).access_token );
+		                    var link = '/*[[@{/}]]*/';
+		                    $(location).attr('href',link);
+		            },
+		               error:function(request,status,error){
+		                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		                  } 
+		        });			
+		}		
+		function funAjax3(){
+			 $.ajax({
+		            type : 'POST',
+		            url : 'http://localhost:8080/oauth/token',
+		            headers: {
+		                'Authorization':'Basic ' + CLIENT_ID, 
+		                'Content-Type':'application/x-www-form-urlencoded' ,
+		                'Access-Control-Allow-Origin':'*'
+		            }, 
+		            crossDomain: true,
+		            data : { 
+		                'access_token' : '' + JSON.parse(localStorage.getItem("ls.token")).access_token,
+		                'refresh_token' : '' + JSON.parse(localStorage.getItem("ls.token")).refresh_token,
+		                'grant_type' : 'refresh_token'
+		            },
+		            success : function(response) {
+		            		//alert(response.access_token);
 		                 	var expiredAt = new Date();
 		                    expiredAt.setSeconds(expiredAt.getSeconds() + response.expires_in);
 		                    response.expires_at = expiredAt.getTime();
@@ -166,7 +200,6 @@
 		}
 		
 		var Base64 = {
-
 				// private property
 				_keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
 
