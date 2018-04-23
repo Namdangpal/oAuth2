@@ -36,7 +36,7 @@
 	<link rel="stylesheet" type="text/css" href="https://colorlib.com/etc/lf/Login_v15/css/util.css">
 	<link rel="stylesheet" type="text/css" href="https://colorlib.com/etc/lf/Login_v15/css/main.css">
 <!--===============================================================================================-->
-  </head>
+   </head>
   <body>
  	<div class="limiter">
 		<div class="container-login100">
@@ -115,6 +115,10 @@
 	<script type="text/javascript">
 	const CLIENT_ID = "bXlfY2xpZW50X2lkOm15X2NsaWVudF9zZWNyZXQ=";
 		function funAjax1(){
+			if(localStorage.getItem("ls.token")==null){
+				alert("접권권한이 없습니다")
+				return;
+			}
 			 $.ajax({ 
 		            url : 'http://localhost:8080/users/user', 
 		            type: 'POST',
@@ -138,7 +142,7 @@
 		}
 		
 		function funAjax2(){
-			 $.ajax({
+			$.ajax({
 		            type : 'POST',
 		            url : 'http://localhost:8080/oauth/token',
 		            headers: {
@@ -163,11 +167,18 @@
 		                    $(location).attr('href',link);
 		            },
 		               error:function(request,status,error){
-		                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		                   //alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		                   if(request.status=="400"){
+		                	   alert("아이디또는비번을 확인하세요")
+		                   }
 		                  } 
 		        });			
 		}		
 		function funAjax3(){
+			if(localStorage.getItem("ls.token")==null){
+				alert("접권권한이 없습니다")
+				return;
+			}
 			 $.ajax({
 		            type : 'POST',
 		            url : 'http://localhost:8080/oauth/token',
@@ -194,6 +205,8 @@
 		            },
 		               error:function(request,status,error){
 		                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		                   if(request.status == "401")
+		                	   localStorage.clear();
 		                  } 
 		        });
 			
