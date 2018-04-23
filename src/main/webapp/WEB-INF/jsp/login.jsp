@@ -137,6 +137,9 @@
 		            },
 		               error:function(request,status,error){
 		                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		            	   if(request.status == "401")
+		            		   funAjax3();
+		                  	} 
 		                  } 
 		        });
 		}
@@ -156,8 +159,7 @@
 		                'password' : '' + $("#staffPwd").val(),
 		                'grant_type' : 'password'
 		            },
-		            success : function(response) {
-		            		
+		            success : function(response) {		            		
 		                 	var expiredAt = new Date();
 		                    expiredAt.setSeconds(expiredAt.getSeconds() + response.expires_in);
 		                    response.expires_at = expiredAt.getTime();
@@ -208,8 +210,7 @@
 		                   if(request.status == "401")
 		                	   localStorage.clear();
 		                  } 
-		        });
-			
+		        });			
 		}
 		
 		var Base64 = {
