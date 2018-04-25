@@ -70,19 +70,25 @@
 						</div>
 					</div>
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" >
+						<!--  <button class="login100-form-btn" >
 							Login
-						</button>
-						<label class="login100-form-btn" onclick="funAjax1()">
-							데이타가져오기
-						</label>
+						</button>-->
+						<div>
 						<label class="login100-form-btn" onclick="funAjax2()">
-							접근권한토큰발행
+							Login
 						</label>
-						
+						&nbsp;&nbsp; 
+						<label class="login100-form-btn" onclick="funAjax1()">
+							데이타가져오기[Alex123전용]
+						</label>&nbsp;&nbsp;	
+						<label class="login100-form-btn" onclick="funAjax4()">
+							데이타가져오기[Tom234전용]
+						</label>&nbsp;&nbsp;							
 						<label class="login100-form-btn" onclick="funAjax3()">
 							접근권한토큰재발행
 						</label>
+						Alex123 [password] , Tom234 [password]
+						</div>
 					</div>
 				</form>
 			</div>
@@ -116,11 +122,11 @@
 	const CLIENT_ID = "bXlfY2xpZW50X2lkOm15X2NsaWVudF9zZWNyZXQ=";
 		function funAjax1(){
 			if(localStorage.getItem("ls.token")==null){
-				alert("접권권한이 없습니다")
+				alert("접근권한이 없습니다");
 				return;
 			}
 			 $.ajax({ 
-		            url : 'http://localhost:8080/users/user', 
+		            url : 'http://10.250.55.191:8080/users/user', 
 		            type: 'POST',
 		            dataType: 'json',
 		            crossDomain: true,
@@ -137,9 +143,13 @@
 		            },
 		               error:function(request,status,error){
 		                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		            	   if(request.status == "401")
+		            	   if(request.status == "401"){
+		            		   alert("access token이 기간이 만료되었습니다. 재발행처리 됩니다.")
 		            		   funAjax3();
 		                  	} 
+		            	   if(request.status == "403"){
+		                	   alert("접근권한이 없습니다");
+		                 	 }
 		                  } 
 		        });
 		}
@@ -147,7 +157,7 @@
 		function funAjax2(){
 			$.ajax({
 		            type : 'POST',
-		            url : 'http://localhost:8080/oauth/token',
+		            url : 'http://10.250.55.191:8080/oauth/token',
 		            headers: {
 		                'Authorization':'Basic ' + CLIENT_ID, 
 		                'Content-Type':'application/x-www-form-urlencoded' ,
@@ -166,24 +176,27 @@
 		                    localStorage.setItem('ls.token', JSON.stringify(response));
 		                    alert("Authorization Bearer " + JSON.parse(localStorage.getItem("ls.token")).access_token );
 		                    var link = '/*[[@{/}]]*/';
-		                    $(location).attr('href',link);
+		                    $(location).attr('href',link); 
 		            },
 		               error:function(request,status,error){
 		                   //alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		                   if(request.status=="400"){
-		                	   alert("아이디또는비번을 확인하세요")
+		                	   alert("아이디또는비번을 확인하세요");
 		                   }
+		                   if(request.status == "403"){
+		                	   alert("접근권한이 없습니다");
+		                  }
 		                  } 
 		        });			
 		}		
 		function funAjax3(){
 			if(localStorage.getItem("ls.token")==null){
-				alert("접권권한이 없습니다")
+				alert("접근권한이 없습니다");
 				return;
 			}
 			 $.ajax({
 		            type : 'POST',
-		            url : 'http://localhost:8080/oauth/token',
+		            url : 'http://10.250.55.191:8080/oauth/token',
 		            headers: {
 		                'Authorization':'Basic ' + CLIENT_ID, 
 		                'Content-Type':'application/x-www-form-urlencoded' ,
@@ -204,15 +217,53 @@
 		                    alert("Authorization Bearer " + JSON.parse(localStorage.getItem("ls.token")).access_token );
 		                    var link = '/*[[@{/}]]*/';
 		                    $(location).attr('href',link);
+		                    alert("access token이 재발행되었습니다");
 		            },
 		               error:function(request,status,error){
 		                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		                   if(request.status == "401"){
+		                	   alert("refresh token이 만료되었습니다. 다시로그인 하세요");
 		                	   localStorage.clear();
-		                  } 
+		                  }
+		                  if(request.status == "403"){
+		                	   alert("접근권한이 없습니다");
+		                  }
+		               }
 		        });			
 		}
-		
+		function funAjax4(){
+			if(localStorage.getItem("ls.token")==null){
+				alert("접근권한이 없습니다");
+				return;
+			}
+			 $.ajax({ 
+		            url : 'http://10.250.55.191:8080/users/Client/find', 
+		            type: 'POST',
+		            dataType: 'json',
+		            crossDomain: true,
+		            //contentType: "application/json; charset=utf-8",
+		            cache: false,
+		              headers: {
+		                'Authorization':'Bearer ' + JSON.parse(localStorage.getItem("ls.token")).access_token ,
+		                'Content-Type':'application/json;charset=utf-8;',
+		                'Access-Control-Allow-Origin':'*'
+		            }, 		
+		            data: "",
+		            success : function(response) {
+		            		 alert(JSON.stringify(response));
+		            },
+		               error:function(request,status,error){
+		                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		            	   if(request.status == "401"){
+		            		   alert("access token이 기간이 만료되었습니다. 재발행처리 됩니다.")
+		            		   funAjax3();
+		                  	} 
+		            	   if(request.status == "403"){
+		                	   alert("접근권한이 없습니다");
+		                 	 }
+		                  } 
+		        });
+		}
 		var Base64 = {
 				// private property
 				_keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",

@@ -1,7 +1,14 @@
 server.port: 9898
  
+  
 spring:
   mvc:
     view:
       prefix: /WEB-INF/jsp/
       suffix: .jsp 
+  application:
+    name: staff-login
+eureka:  
+  client:
+    serviceUrl:
+      defaultZone: ${vcap.services.eureka-service.credentials.uri:http://127.0.0.1:8761}/eureka/
